@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora De Imc</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <style>
+        body{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 100vh;
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <div id="app">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12" v-if="msg.visible">
+                    <div :class="msg.class" role="alert">
+                        <strong>{{ msg.content }}</strong>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-sm-8">
+                    <div class="card shadow-sm">
+                      <div class="card-body px-4 py-3">
+                        <h2 class="card-title text-center mb-2">Calculadora Imc - Vue.js</h2>
+                        <hr>
+                        <form action="" method="post">
+                            <div class="form-group">
+                                <label for="altura">Altura</label>
+
+                                <input type="text" id="altura" v-model="altura" :style="fonts[1]" class="form-control" value="0" maxlength="4">
+                            </div>
+    
+                            <div class="form-group">
+                                <label for="peso">Peso</label>
+
+                                <input type="text" id="peso" v-model="peso" :style="fonts[1]" class="form-control" value="0" maxlength="3">
+                            </div>
+    
+                            <button class="btn btn-dark btn-block btn-lg" @click.prevent.stop="calcularImc()">Calcular</button>
+                        </form>
+                      </div>
+                    </div>
+                </div>
+
+                <div :class="resultClass" :style="fonts[2]" v-if="result">
+                    {{ resultset }}
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+    <script src="https://www.unpkg.com/vue"></script>
+    <script>
+        var app = new Vue({
+            el: "#app",
+            data: {
+                altura: 0,
+                peso: 0,
+                card: {
+                    'margin-top': '-100px'
+                },
+                resultset: 0,
+                result: false,
+                fonts: [
+                    {'font-size': '1em'},
+                    {'font-size': '2em'},
+                    {'font-size': '3em'}
+                ],
+                msg: {
+                    'content': "",
+                    'visible': false,
+                    'class': ""
+                },
+                    
+                resultClass: [
+                    "list-group-item",  
+                    "text-center",
+                    "px-4",
+                    "py-0", 
+                    "mt-2", 
+                    "h-100", 
+                    "d-flex", 
+                    "justify-content-center", 
+                    "flex-column", 
+                    "rounded", 
+                    "bg-success", 
+                    "text-white", 
+                    "shadow"
+                ]
+            },
+            methods: {
+                calcularImc() {
+                    if ((Number(this.peso) && Number(this.altura)) && (this.peso > 0 && this.altura > 0)) {
+                        let imc = peso.value / (altura.value * altura.value)
+                        
+                        this.resultset = imc.toFixed(2)
+                        this.result = true
+
+                        this.peso = 0
+                        this.altura = 0
+
+                        this.msg.visible = false
+                    } else {
+                        this.msg.content = "Preencha Os Campos Peso E Altura"
+                        this.msg.visible = true
+                        this.msg.class = "alert alert-warning"
+                    }
+     
+                }
+            }
+        })
+
+    </script>
+</body>
+</html>
